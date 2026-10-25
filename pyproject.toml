@@ -1,0 +1,23 @@
+[project]
+name = "flood-detection-computer-vision"
+version = "0.1.0"
+description = "Flood detection using computer vision"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "albumentations>=2.0.8",
+    "efficientnet-pytorch>=0.7.1",
+    "huggingface-hub>=2.3.0",
+    "ipykernel>=7.4.0",
+    "jupyter>=1.1.1",
+    "matplotlib>=3.11.2",
+    "opencv-python>=5.0.0.93",
+    "pandas>=3.1.0",
+    "pretrainedmodels>=0.7.4",
+    "scikit-learn>=1.9.1",
+    "segmentation-models-pytorch>=0.5.0",
+    "timm>=1.0.30",
+]
+
+[tool.uv]
+package = false
