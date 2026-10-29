@@ -13,14 +13,13 @@ uv sync
 
 1. `00_EDA.ipynb` – look at the data
 2. `01_Training_Evaluation.ipynb` – train and compare the models, Model 1 is the final one
-3. `02_Quantization.ipynb` – export to ONNX and make the INT8 version
+3. `02_Quantization.ipynb` – export to ONNX and make the FP32 version
 
 ## Models
 
 Put the ONNX files in the repo root or in a `models/` folder:
 
 - `model_1_fp32.onnx` – default, most accurate
-- `model_1_int8.onnx` – optional, 4x smaller and faster, but loses some F1 (about 6 points in my test)
 
 The demo shows every `model_1_*.onnx` file it finds.
 
