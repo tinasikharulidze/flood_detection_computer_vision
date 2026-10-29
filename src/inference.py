@@ -2,12 +2,13 @@
 
 The API and the Streamlit app both use this file, so the model logic lives in one place.
 """
+import io
 import time
 from pathlib import Path
 
-import cv2
 import numpy as np
 import onnxruntime as ort
+from PIL import Image, UnidentifiedImageError
 
 ROOT = Path(__file__).resolve().parent.parent
 MODEL_DIRS = [ROOT / "models", ROOT]   # I look for the .onnx files in models/ first, then in the repo root
@@ -27,8 +28,10 @@ def find_models():
 
 def decode_gray(file_bytes):
     """Decode uploaded image bytes into a 2D uint8 array. I return None if the file is not an image."""
-    array = np.frombuffer(file_bytes, dtype=np.uint8)
-    return cv2.imdecode(array, cv2.IMREAD_GRAYSCALE)
+    try:
+        return np.array(Image.open(io.BytesIO(file_bytes)).convert("L"))
+    except (UnidentifiedImageError, OSError):
+        return None
 
 
 def s1_to_rgb(vv, vh):

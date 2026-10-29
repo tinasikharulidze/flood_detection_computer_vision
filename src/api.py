@@ -1,10 +1,11 @@
 """FastAPI service. Run from the repo root: uvicorn src.api:app --port 8000"""
 import base64
+import io
 
-import cv2
 import numpy as np
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.responses import Response
+from PIL import Image
 
 from src.inference import DEFAULT_THRESHOLD, FloodSegmenter, make_overlay
 
@@ -16,9 +17,9 @@ def to_png(image):
     """Turn a float (0-1) or uint8 image into PNG bytes."""
     if image.dtype != np.uint8:
         image = (np.clip(image, 0, 1) * 255).astype(np.uint8)
-    if image.ndim == 3:
-        image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)  # OpenCV saves BGR
-    return cv2.imencode(".png", image)[1].tobytes()
+    buffer = io.BytesIO()
+    Image.fromarray(image).save(buffer, format="PNG")
+    return buffer.getvalue()
 
 
 async def run_prediction(vv, vh, variant, threshold):
